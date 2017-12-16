@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 
-import RatingModal from 'RatingModal'
-
-class RatingCircle extends Component {
+class RatingModal extends Component {
   render() {
     return <View />
   }
 }
 
-export default RatingCircle
+export default RatingModal
