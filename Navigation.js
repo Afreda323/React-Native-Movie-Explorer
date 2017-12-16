@@ -1,4 +1,4 @@
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 
 import Discover from './pages/Discover'
 import MovieDetail from './pages/MovieDetail'
@@ -6,18 +6,24 @@ import Movies from './pages/Movies'
 import Ratings from './pages/Ratings'
 import Search from './pages/Search'
 
-const Navigation = TabNavigator({
+const MainScreens = TabNavigator({
   Discover: {
     screen: Discover,
   },
   Movies: {
     screen: Movies,
   },
-  Search: {
-    screen: Search,
-  },
   Ratings: {
     screen: Ratings,
+  },
+})
+
+const Navigation = StackNavigator({
+  App: {
+    screen: MainScreens,
+  },
+  Search: {
+    screen: Search,
   },
   MovieDetail: {
     screen: MovieDetail,
