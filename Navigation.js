@@ -6,6 +6,9 @@ import Movies from './pages/Movies'
 import Ratings from './pages/Ratings'
 import Search from './pages/Search'
 
+import colors from './constants/colors'
+import font from './constants/fontFamily'
+
 const MainScreens = TabNavigator(
   {
     Movies: {
@@ -14,36 +17,40 @@ const MainScreens = TabNavigator(
     Discover: {
       screen: Discover,
     },
+    Search: {
+      screen: Search,
+    },
     Ratings: {
       screen: Ratings,
     },
   },
   {
+    swipeEnabled: true, 
     tabBarPosition: 'bottom',
-    swipeEnabled: true,
     tabBarOptions: {
       style: {
-        backgroundColor: '#000',
+        backgroundColor: colors.black,
       },
       labelStyle: {
-        color: '#fff',
+        color: colors.white,
+        fontFamily: font.thin,
       },
     },
   }
 )
 
-const Navigation = StackNavigator({
-  App: {
-    screen: MainScreens,
+const Navigation = StackNavigator(
+  {
+    App: {
+      screen: MainScreens,
+    },
+    MovieDetail: {
+      screen: MovieDetail,
+    },
   },
-  Search: {
-    screen: Search,
-  },
-  MovieDetail: {
-    screen: MovieDetail,
-  },
-}, {
-    mode: 'modal'
-})
+  {
+    mode: 'modal',
+  }
+)
 
 export default Navigation

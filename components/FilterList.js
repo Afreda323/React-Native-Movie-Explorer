@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types'
 
 import colors from '../constants/colors'
+import font from '../constants/fontFamily'
 
 class FilterList extends Component {
   static propTypes = {
@@ -31,9 +32,11 @@ class FilterList extends Component {
 
   render() {
     return (
+      <View style={styles.listWarp}>
       <ScrollView contentContainerStyle={styles.wrap} horizontal={true}>
         {this.renderItems()}
       </ScrollView>
+      </View>
     )
   }
 }
@@ -41,20 +44,26 @@ class FilterList extends Component {
 export default FilterList
 
 const styles = StyleSheet.create({
+  listWarp: {
+
+    backgroundColor: colors.black,
+  },
   wrap: {
     display: 'flex',
-    backgroundColor: colors.black,
     justifyContent: 'space-between',
-    alignItems: 'stretch',
-    width: '100%'
+    minWidth: '100%',
+    paddingHorizontal: 15
+
   },
   filter: {
     color: colors.white,
-    paddingVertical: 5,
-    fontSize: 14
+    paddingBottom: 8,
+    fontSize: 15,
+    fontFamily: font.thin,
   },
   textWrap: {
-    marginVertical: 8,
+    marginTop: 8,
+    marginBottom: 12,
     marginHorizontal: 15,
   },
   activeTextWrap: {

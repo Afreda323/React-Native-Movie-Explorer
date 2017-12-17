@@ -18,7 +18,7 @@ class Discover extends Component {
     tabBarIcon: ({ tintColor, focused }) => (
       <Ionicons
         name={focused ? 'ios-eye' : 'ios-eye-outline'}
-        size={32}
+        size={30}
         color={focused ? '#c32b2b' : '#fff'}
       />
     ),

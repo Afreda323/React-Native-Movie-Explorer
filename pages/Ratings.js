@@ -17,7 +17,7 @@ class Ratings extends Component {
     tabBarIcon: ({ tintColor, focused }) => (
       <Ionicons
         name={focused ? 'ios-star' : 'ios-star-outline'}
-        size={32}
+        size={30}
         color={focused ? '#c32b2b' : '#fff'}
       />
     ),
