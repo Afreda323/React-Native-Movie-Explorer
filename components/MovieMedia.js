@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 
-import ImageList from 'ImageList'
-import VideoList from 'VideoList'
-import FilterList from 'FilterList'
+import ImageList from './ImageList'
+import VideoList from './VideoList'
+import FilterList from './FilterList'
 
 class MovieMedia extends Component {
   render() {

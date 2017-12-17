@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 import MovieHeader from '../components/MovieHeader'
 import MovieDescription from '../components/MovieDescription'
@@ -10,6 +10,7 @@ class MovieDetail extends Component {
   render() {
     return (
       <View>
+        <Text>Movie Detail</Text>
         <MovieHeader />
         <MovieDescription />
         <MovieMedia />
