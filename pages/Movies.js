@@ -48,9 +48,10 @@ class Movies extends Component {
   }
   handleFilter = filter => {
     this.setState({ activeFilter: filter })
+    console.log(this.props)
   }
   render() {
-    const { loadMoreEntries, results, error } = this.props
+    const { popular, error } = this.props.data
     if (error) {
       console.log(error)
     }
@@ -61,17 +62,19 @@ class Movies extends Component {
           filters={['Popular', 'Coming Soon', 'Now Playing', 'Top Rated']}
           onPress={val => this.handleFilter(val)}
         />
-        <ImageList
-          onScrollBottom={loadMoreEntries}
-          movies={MOVIES}
-          onClick={id => alert(id)}
-        />
+        {popular && (
+          <ImageList
+            onScrollBottom={this.props.loadMoreEntries}
+            movies={popular.results}
+            onClick={id => alert(id)}
+          />
+        )}
       </View>
     )
   }
 }
 const QUERY = gql`
-  query getPopular($page: Int!) {
+  query($page: Int!) {
     popular(page: $page) {
       page
       results {
@@ -83,26 +86,31 @@ const QUERY = gql`
 `
 
 export default graphql(QUERY, {
-  options: ({ data }) => {
+  options: () => {
     return { variables: { page: 1 } }
   },
-  props({ data: { loading, page, results, fetchMore, error} }) {
+  props({ data }) {
     return {
-      loading,
-      page,
-      results,
+      data,
       loadMoreEntries() {
-        alert('Hello')
-        return fetchMore({
+        console.log(data)
+        return data.fetchMore({
           variables: {
-            page: page + 1,
+            page: data.popular.page + 1,
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (!fetchMoreResult) {
               return previousResult
             }
             return Object.assign({}, previousResult, {
-              results: [...previousResult.results, ...fetchMoreResult.results],
+              popular: {
+                ...previousResult.popular,
+                page: previousResult.popular.page + 1,
+                results: [
+                  ...previousResult.popular.results,
+                  ...fetchMoreResult.popular.results,
+                ],
+              },
             })
           },
         })

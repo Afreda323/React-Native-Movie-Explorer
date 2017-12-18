@@ -13,6 +13,9 @@ class ImageList extends Component {
       })
     ),
   }
+  static defaultProps = {
+    movies: []
+  }
   onScroll = e => {
     let paddingBottom = 10
     // Add the scroll height to a 10px padding
