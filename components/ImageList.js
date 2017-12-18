@@ -45,7 +45,7 @@ class ImageList extends Component {
     return (
       <ScrollView
         contentContainerStyle={styles.scroll}
-        onScroll={this.onScroll}>
+        onScroll={this.props.onScrollBottom && this.onScroll}>
         {this.renderMovies()}
       </ScrollView>
     )

@@ -48,10 +48,18 @@ class Movies extends Component {
   }
   handleFilter = filter => {
     this.setState({ activeFilter: filter })
-    console.log(this.props)
+    if (filter === 'Popular') {
+      this.props.navigation.setParams({ filter: 'popular' })
+    } else if (filter === 'Coming Soon') {
+      this.props.navigation.setParams({ filter: 'upcoming' })
+    } else if (filter === 'Now Playing') {
+      this.props.navigation.setParams({ filter: 'nowPlaying' })
+    } else if (filter === 'Top Rated') {
+      this.props.navigation.setParams({ filter: 'topRated' })
+    }
   }
   render() {
-    const { popular, error } = this.props.data
+    const { other, error } = this.props.data
     if (error) {
       console.log(error)
     }
@@ -62,10 +70,10 @@ class Movies extends Component {
           filters={['Popular', 'Coming Soon', 'Now Playing', 'Top Rated']}
           onPress={val => this.handleFilter(val)}
         />
-        {popular && (
+        {other && (
           <ImageList
             onScrollBottom={this.props.loadMoreEntries}
-            movies={popular.results}
+            movies={other.results}
             onClick={id => alert(id)}
           />
         )}
@@ -74,8 +82,8 @@ class Movies extends Component {
   }
 }
 const QUERY = gql`
-  query($page: Int!) {
-    popular(page: $page) {
+  query($filter: String!, $page: Int!) {
+    other(filter: $filter, page: $page) {
       page
       results {
         id
@@ -86,29 +94,28 @@ const QUERY = gql`
 `
 
 export default graphql(QUERY, {
-  options: () => {
-    return { variables: { page: 1 } }
+  options: ({ navigation: { state: { params = { filter: 'popular' } } } }) => {
+    return { variables: { filter: params.filter, page: 1 } }
   },
   props({ data }) {
     return {
       data,
       loadMoreEntries() {
-        console.log(data)
         return data.fetchMore({
           variables: {
-            page: data.popular.page + 1,
+            page: data.other.page + 1,
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (!fetchMoreResult) {
               return previousResult
             }
             return Object.assign({}, previousResult, {
-              popular: {
-                ...previousResult.popular,
-                page: previousResult.popular.page + 1,
+              other: {
+                ...previousResult.other,
+                page: previousResult.other.page + 1,
                 results: [
-                  ...previousResult.popular.results,
-                  ...fetchMoreResult.popular.results,
+                  ...previousResult.other.results,
+                  ...fetchMoreResult.other.results,
                 ],
               },
             })
