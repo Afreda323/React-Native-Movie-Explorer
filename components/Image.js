@@ -25,7 +25,7 @@ class Img extends Component {
   onLoadImage() {
     Animated.timing(this.state.imageOpacity, {
       toValue: 1,
-      duration: this.props.imageFadeDuration,
+      duration: 250,
     }).start()
   }
   render() {
@@ -49,6 +49,7 @@ class Img extends Component {
 const styles = StyleSheet.create({
   touch: {
     width: '49%',
+    position: 'relative',
   },
   offset: {
     marginTop: -(width / 2 * 3 / 2 / 2),
@@ -56,7 +57,8 @@ const styles = StyleSheet.create({
   img: {
     width: '100%',
     height: width / 2 * 3 / 2,
-    margin: 4
+    margin: 4,
+    opacity: 0,
   },
 })
 export default Img

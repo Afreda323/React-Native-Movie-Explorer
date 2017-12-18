@@ -9,6 +9,9 @@ import {
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+
 import ImageList from '../components/ImageList'
 import FilterList from '../components/FilterList'
 
@@ -60,7 +63,13 @@ class Movies extends Component {
   }
 }
 
-export default Movies
+export default graphql(gql`
+  query Popular {
+    results {
+      id
+    }
+  }
+`)(Movies);
 
 const styles = StyleSheet.create({
   page: {
