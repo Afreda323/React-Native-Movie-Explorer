@@ -5,6 +5,7 @@ import Image from './Image'
 
 class ImageList extends Component {
   static propTypes = {
+    filter: PropTypes.string,
     onScrollBottom: PropTypes.func,
     movies: PropTypes.arrayOf(
       PropTypes.shape({
@@ -14,8 +15,14 @@ class ImageList extends Component {
     ),
   }
   static defaultProps = {
-    movies: []
+    movies: [],
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.filter !== nextProps.filter) {
+      this.scroll.scrollWithoutAnimationTo(0)
+    }
+  }
+
   onScroll = e => {
     let paddingBottom = 10
     // Add the scroll height to a 10px padding
@@ -29,7 +36,7 @@ class ImageList extends Component {
       this.props.onScrollBottom()
     }
   }
-  
+
   renderMovies = () => {
     return this.props.movies.map((movie, i) => (
       <Image
@@ -44,6 +51,7 @@ class ImageList extends Component {
   render() {
     return (
       <ScrollView
+        ref={scroll => (this.scroll = scroll)}
         contentContainerStyle={styles.scroll}
         onScroll={this.props.onScrollBottom && this.onScroll}>
         {this.renderMovies()}
