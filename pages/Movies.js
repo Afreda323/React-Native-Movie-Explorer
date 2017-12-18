@@ -9,8 +9,8 @@ import {
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
 import ImageList from '../components/ImageList'
 import FilterList from '../components/FilterList'
@@ -50,6 +50,10 @@ class Movies extends Component {
     this.setState({ activeFilter: filter })
   }
   render() {
+    const { loadMoreEntries, results, error } = this.props
+    if (error) {
+      console.log(error)
+    }
     return (
       <View style={styles.page}>
         <FilterList
@@ -57,19 +61,55 @@ class Movies extends Component {
           filters={['Popular', 'Coming Soon', 'Now Playing', 'Top Rated']}
           onPress={val => this.handleFilter(val)}
         />
-        <ImageList movies={MOVIES} onClick={id => alert(id)}/>
+        <ImageList
+          onScrollBottom={loadMoreEntries}
+          movies={MOVIES}
+          onClick={id => alert(id)}
+        />
       </View>
     )
   }
 }
-
-export default graphql(gql`
-  query Popular {
-    results {
-      id
+const QUERY = gql`
+  query getPopular($page: Int!) {
+    popular(page: $page) {
+      page
+      results {
+        id
+        poster_path
+      }
     }
   }
-`)(Movies);
+`
+
+export default graphql(QUERY, {
+  options: ({ data }) => {
+    return { variables: { page: 1 } }
+  },
+  props({ data: { loading, page, results, fetchMore, error} }) {
+    return {
+      loading,
+      page,
+      results,
+      loadMoreEntries() {
+        alert('Hello')
+        return fetchMore({
+          variables: {
+            page: page + 1,
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            if (!fetchMoreResult) {
+              return previousResult
+            }
+            return Object.assign({}, previousResult, {
+              results: [...previousResult.results, ...fetchMoreResult.results],
+            })
+          },
+        })
+      },
+    }
+  },
+})(Movies)
 
 const styles = StyleSheet.create({
   page: {

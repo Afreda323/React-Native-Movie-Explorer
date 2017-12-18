@@ -9,9 +9,10 @@ import { ApolloProvider } from 'react-apollo'
 import Navigation from './Navigation'
 
 const client = new ApolloClient({
-  link: new HttpLink(),
+  link: new HttpLink({
+    uri: 'https://blooming-garden-30605.herokuapp.com/graphql',
+  }),
   cache: new InMemoryCache(),
-  uri: 'http://127.168.1.6:1337/graphql',
 })
 
 export default class App extends React.Component {
