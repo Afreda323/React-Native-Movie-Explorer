@@ -28,7 +28,6 @@ class Discover extends Component {
       <View>
         <Text>Discover</Text>
         <FilterModal />
-        <ImageList />
       </View>
     )
   }
