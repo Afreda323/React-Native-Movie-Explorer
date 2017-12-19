@@ -11,21 +11,20 @@ import font from './constants/fontFamily'
 
 const MainScreens = TabNavigator(
   {
+    Search: {
+      screen: Search,
+    },
     Movies: {
       screen: Movies,
     },
     Discover: {
       screen: Discover,
     },
-    Search: {
-      screen: Search,
-    },
     Ratings: {
       screen: Ratings,
     },
   },
   {
-    swipeEnabled: true, 
     tabBarPosition: 'bottom',
     tabBarOptions: {
       style: {

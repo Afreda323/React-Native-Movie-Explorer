@@ -20,7 +20,7 @@ class Img extends Component {
     offset: PropTypes.bool,
   }
   state = {
-    imageOpacity: new Animated.Value(0.3),
+    imageOpacity: new Animated.Value(0),
   }
   onLoadImage() {
     Animated.timing(this.state.imageOpacity, {

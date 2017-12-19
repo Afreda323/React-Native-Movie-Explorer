@@ -59,7 +59,7 @@ class Movies extends Component {
     }
   }
   render() {
-    const { other, error } = this.props.data
+    const { other, error, loading } = this.props.data
     if (error) {
       console.log(error)
     }
@@ -78,6 +78,7 @@ class Movies extends Component {
             onClick={id => alert(id)}
           />
         )}
+        {loading && <Text>Loading...</Text>}
       </View>
     )
   }

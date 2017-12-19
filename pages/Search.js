@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StatusBar, Platform } from 'react-native'
+import { View, Text, TouchableOpacity, StatusBar, Platform, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
 import Searchbar from '../components/Searchbar'
@@ -35,7 +35,7 @@ class Search extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={styles.page}>
         <Searchbar />
         <SearchResults />
       </View>
@@ -44,3 +44,10 @@ class Search extends Component {
 }
 
 export default Search
+
+const styles = StyleSheet.create({
+  page: {
+    backgroundColor: colors.black,
+    flex: 1,
+  }
+})

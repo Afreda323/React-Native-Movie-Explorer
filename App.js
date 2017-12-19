@@ -5,8 +5,12 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloProvider } from 'react-apollo'
-
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import Navigation from './Navigation'
+import reducer from './reducers/'
+
+const store = createStore(reducer)
 
 const client = new ApolloClient({
   link: new HttpLink({
@@ -30,7 +34,9 @@ export default class App extends React.Component {
   render() {
     return this.state.fonts ? (
       <ApolloProvider client={client}>
-        <Navigation />
+        <Provider store={store}>
+          <Navigation />
+        </Provider>
       </ApolloProvider>
     ) : null
   }

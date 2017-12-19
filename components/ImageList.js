@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+} from 'react-native'
 import PropTypes from 'prop-types'
 import Image from './Image'
 
@@ -16,6 +22,9 @@ class ImageList extends Component {
   }
   static defaultProps = {
     movies: [],
+  }
+  componentDidMount() {
+    console.log(this.props)
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.filter !== nextProps.filter) {
@@ -50,12 +59,21 @@ class ImageList extends Component {
   }
   render() {
     return (
-      <ScrollView
-        ref={scroll => (this.scroll = scroll)}
-        contentContainerStyle={styles.scroll}
-        onScroll={this.props.onScrollBottom && this.onScroll}>
-        {this.renderMovies()}
-      </ScrollView>
+      <View>
+        <ScrollView
+          ref={scroll => (this.scroll = scroll)}
+          contentContainerStyle={styles.scroll}
+          onScroll={this.props.onScrollBottom && this.onScroll}>
+          {this.renderMovies()}
+        </ScrollView>
+        {this.props.onLoadMore && (
+          <TouchableOpacity
+            onPress={this.props.onLoadMore}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Load More</Text>
+          </TouchableOpacity>
+        )}
+      </View>
     )
   }
 }
@@ -65,6 +83,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+  },
+  button: {
+    padding: 100,
+    margin: 20,
   },
 })
 export default ImageList
