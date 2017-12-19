@@ -23,9 +23,6 @@ class ImageList extends Component {
   static defaultProps = {
     movies: [],
   }
-  componentDidMount() {
-    console.log(this.props)
-  }
   componentWillReceiveProps(nextProps) {
     if (this.props.filter !== nextProps.filter) {
       this.scroll.scrollWithoutAnimationTo(0)

@@ -1,15 +1,24 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, TextInput, StyleSheet } from 'react-native'
 import font from '../constants/fontFamily'
 import colors from '../constants/colors'
 
 class Searchbar extends Component {
+  static propTypes = {
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    onClear: PropTypes.func,
+    focus: PropTypes.bool,
+  }
   render() {
     return (
       <TextInput
+        value={this.props.value}
+        onChangeText={this.props.onChange}
         placeholder="Enter you search"
         placeholderTextColor={'#aaaaaa'}
-        autoFocus
+        autoFocus={this.props.focus}
         style={styles.input}
       />
     )
