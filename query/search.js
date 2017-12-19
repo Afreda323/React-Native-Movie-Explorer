@@ -7,8 +7,11 @@ export default gql`
       results {
         id
         title
+        overview
         poster_path
         vote_average
+        vote_count
+        backdrop_path
       }
     }
   }

@@ -47,7 +47,7 @@ class Search extends Component {
     StatusBar.setBarStyle('light-content', true)
   }
   render() {
-    const { search } = this.props.data
+    const { data } = this.props
     return (
       <View style={styles.page}>
         <Searchbar
@@ -55,7 +55,13 @@ class Search extends Component {
           onChange={this.props.updateSearchInput}
           onClear={this.props.clearSearchInput}
         />
-        {search && <SearchResults results={search.results} />}
+        {data &&
+        data.search && (
+          <SearchResults
+            onClick={id => alert(id)}
+            results={data.search.results}
+          />
+        )}
       </View>
     )
   }
@@ -71,12 +77,12 @@ const withApollo = component =>
     options: ({ searchInput }) => {
       return {
         variables: {
-          query: "300",
+          query: searchInput,
           page: 1,
         },
       }
     },
-    // skip: ({ searchInput }) => searchInput.trim() === '',
+    skip: ({ searchInput }) => searchInput.trim() === '',
   })(component)
 
 export default compose(withRedux, withApollo)(Search)

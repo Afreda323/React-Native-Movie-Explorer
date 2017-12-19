@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ListView, Text, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 
 import SearchResult from './SearchResult'
@@ -12,24 +12,18 @@ class SearchResults extends Component {
         title: PropTypes.string,
         poster_path: PropTypes.string,
         vote_average: PropTypes.number,
+        vote_count: PropTypes.number,
+        overview: PropTypes.string,
       })
     ),
   }
   renderResults = () => {
     return this.props.results.map(result => (
-      <SearchResult key={result.id} result={result} />
+      <SearchResult onClick={id => this.props.onClick(id)} key={result.id} result={result} />
     ))
   }
   render() {
-    if (this.props.results && this.props.results.length > 0) {
-      return (
-        <View>
-          {this.renderResults()}
-        </View>
-      )
-    } else {
-      return <View />
-    }
+    return <ScrollView style={{marginTop: -30}}>{this.renderResults()}</ScrollView>
   }
 }
 
