@@ -59,11 +59,17 @@ class Movies extends Component {
   }
   render() {
     const { other, error, loading } = this.props.data
+    const { navigate } = this.props.navigation
     if (error) {
       console.log(error)
     }
     return (
       <View style={styles.page}>
+        {loading && (
+          <Text style={{ color: colors.white, fontFamily: font.thin }}>
+            Loading...
+          </Text>
+        )}
         <FilterList
           active={this.handleFilter(this.props.activeFilter)}
           filters={['Popular', 'Coming Soon', 'Now Playing', 'Top Rated']}
@@ -74,10 +80,9 @@ class Movies extends Component {
             filter={this.handleFilter(this.props.activeFilter)}
             onScrollBottom={this.props.loadMoreEntries}
             movies={other.results}
-            onClick={id => alert(id)}
+            onClick={(id, title) => navigate('MovieDetail', { id, title })}
           />
         )}
-        {loading && <Text>Loading...</Text>}
       </View>
     )
   }

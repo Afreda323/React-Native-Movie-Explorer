@@ -17,13 +17,28 @@ class SearchResults extends Component {
       })
     ),
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      this.scroll.scrollTo(0)
+    }
+  }
   renderResults = () => {
     return this.props.results.map(result => (
-      <SearchResult onClick={id => this.props.onClick(id)} key={result.id} result={result} />
+      <SearchResult
+        onClick={id => this.props.onClick(id)}
+        key={result.id}
+        result={result}
+      />
     ))
   }
   render() {
-    return <ScrollView style={{marginTop: -30}}>{this.renderResults()}</ScrollView>
+    return (
+      <ScrollView
+        ref={scroll => (this.scroll = scroll)}
+        style={{ marginTop: -30 }}>
+        {this.renderResults()}
+      </ScrollView>
+    )
   }
 }
 

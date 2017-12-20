@@ -62,9 +62,10 @@ const styles = StyleSheet.create({
   input: {
     zIndex: 4,
     height: 40,
-    backgroundColor: 'rgba(0,0,0,.5)',
-    paddingHorizontal: '15%',
-    marginHorizontal: '5%',
+    // backgroundColor: 'rgba(0,0,0,.5)',
+    marginTop: -10,
+    paddingHorizontal: '10%',
+    marginHorizontal: '10%',
     color: colors.white,
     fontFamily: font.thin,
     fontSize: 20,
@@ -75,11 +76,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     zIndex: 3,
     position: 'relative',
+    backgroundColor: 'rgba(0,0,0,.8)'
   },
   iconLeft: {
     zIndex: 5,
     position: 'absolute',
-    top: 7,
+    top: -3,
     padding: 10,
     left: '7%',
     backgroundColor: 'transparent',
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   iconRight: {
     zIndex: 5,
     position: 'absolute',
-    top: 0,
+    top: -10,
     padding: 10,
     right: '7%',
     backgroundColor: 'transparent',

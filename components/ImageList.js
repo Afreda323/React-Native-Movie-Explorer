@@ -25,7 +25,7 @@ class ImageList extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.filter !== nextProps.filter) {
-      this.scroll.scrollWithoutAnimationTo(0)
+      this.scroll.scrollTo(0)
     }
   }
 

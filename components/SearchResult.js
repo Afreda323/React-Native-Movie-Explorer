@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     opacity: 0,
   },
   ratingWrap: {
+    marginTop: 4,
     flexDirection: 'row',
   },
   backdrop: {

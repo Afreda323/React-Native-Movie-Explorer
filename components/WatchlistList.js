@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 
-import Rating from './Rating'
+import WatchlistItem from './WatchlistItem'
 
-class RatingsList extends Component {
+class WatchlistList extends Component {
   render() {
     return (
       <View>
-        <Rating />
+        <WatchlistItem />
       </View>
     )
   }
 }
 
-export default RatingsList
+export default WatchlistList

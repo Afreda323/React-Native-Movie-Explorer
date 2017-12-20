@@ -56,6 +56,12 @@ class Search extends Component {
           onClear={this.props.clearSearchInput}
         />
         {data &&
+        data.loading && (
+          <Text style={{ color: colors.white, fontFamily: font.thin }}>
+            Loading...
+          </Text>
+        )}
+        {data &&
         data.search && (
           <SearchResults
             onClick={id => alert(id)}

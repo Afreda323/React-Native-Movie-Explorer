@@ -18,7 +18,7 @@ class FilterList extends Component {
     active: PropTypes.string.isRequired,
   }
   renderItems = () =>
-    this.props.filters.map(filter => (
+    this.props.filters ? this.props.filters.map(filter => (
       <TouchableOpacity key={filter} onPress={() => this.props.onPress(filter)}>
         <View
           style={[
@@ -28,14 +28,14 @@ class FilterList extends Component {
           <Text style={styles.filter}>{filter}</Text>
         </View>
       </TouchableOpacity>
-    ))
+    )) : null
 
   render() {
     return (
-      <View style={styles.listWarp}>
-      <ScrollView contentContainerStyle={styles.wrap} horizontal={true}>
-        {this.renderItems()}
-      </ScrollView>
+      <View style={styles.listWrap}>
+        <ScrollView contentContainerStyle={styles.wrap} horizontal={true}>
+          {this.renderItems()}
+        </ScrollView>
       </View>
     )
   }
@@ -44,16 +44,15 @@ class FilterList extends Component {
 export default FilterList
 
 const styles = StyleSheet.create({
-  listWarp: {
-
-    backgroundColor: colors.black,
+  listWrap: {
+    zIndex: 5,
+    backgroundColor: 'rgba(0,0,0,.8)',
   },
   wrap: {
     display: 'flex',
     justifyContent: 'space-between',
     minWidth: '100%',
-    paddingHorizontal: 15
-
+    paddingHorizontal: 15,
   },
   filter: {
     color: colors.white,
