@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import { View, Platform } from 'react-native'
+import { View, Platform, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import { connect } from 'react-redux'
+
+import * as actions from '../actions/watchlist.actions'
 
 import WatchlistList from '../components/WatchlistList'
 
@@ -20,7 +23,7 @@ class Watchlist extends Component {
       fontSize: 18,
       fontFamily: font.regular,
     },
-    
+
     tabBarIcon: ({ tintColor, focused }) => (
       <Ionicons
         name={focused ? 'ios-list-box' : 'ios-list-box-outline'}
@@ -30,12 +33,25 @@ class Watchlist extends Component {
     ),
   })
   render() {
+    const { watched, notWatched } = this.props
     return (
-      <View>
-        <WatchlistList />
+      <View style={styles.page}>
+        <WatchlistList watched={watched} notWatched={notWatched} />
       </View>
     )
   }
 }
 
-export default Watchlist
+const mapStateToProps = ({ watchlist: { watched, notWatched } }) => ({
+  watched,
+  notWatched,
+})
+export default connect(mapStateToProps, actions)(Watchlist)
+
+const styles = StyleSheet.create({
+  page: {
+    backgroundColor: colors.black,
+    flex: 1,
+  },
+})
+
