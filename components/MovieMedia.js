@@ -27,15 +27,22 @@ class MovieMedia extends Component {
   }
   static defaultProps = {
     images: [],
-    cast: []
+    cast: [],
   }
   state = {
     imageEnd: 4,
     images: this.props.images.slice(0, 4),
+    castEnd: 3,
+    cast: this.props.cast.slice(0, 3),
   }
   addImages = () => {
     this.setState({ imageEnd: this.state.imageEnd + 4 }, () =>
       this.setState({ images: this.props.images.slice(0, this.state.imageEnd) })
+    )
+  }
+  addCast = () => {
+    this.setState({ castEnd: this.state.castEnd + 3 }, () =>
+      this.setState({ cast: this.props.cast.slice(0, this.state.castEnd) })
     )
   }
   render() {
@@ -54,7 +61,7 @@ class MovieMedia extends Component {
         />
         <View style={styles.imageCont}>
           {this.state.images.map(image => (
-            <View style={{ width: width / 2, height: width / 2 / 1.7 }}>
+            <View style={{ width: width / 2 - 4, height: width / 2 / 1.777777777777778 }}>
               <Image
                 resizeMode="contain"
                 style={{ width: '100%', height: '100%' }}
@@ -69,12 +76,35 @@ class MovieMedia extends Component {
             <Ionicons
               name={'ios-images-outline'}
               size={25}
-              color={colors.white}
+              color={colors.mediumRed}
             />
           </TouchableOpacity>
         )}
         <VideoList />
-        <ImageList cast castMembers={this.props.cast} />
+        <View style={{ backgroundColor: colors.white }}>
+          <Text style={styles.titleAlt}>Cast Members</Text>
+          <View
+            style={{
+              backgroundColor: colors.mediumRed,
+              height: 2,
+              width: 50,
+              marginTop: 5,
+              marginBottom: 8,
+              marginHorizontal: 20,
+            }}
+          />
+          <ImageList cast castMembers={this.state.cast} />
+          {this.state.cast.length >= this.props.cast.length ? null : (
+            <TouchableOpacity style={styles.buttonAlt} onPress={this.addCast}>
+              <Text style={styles.buttonTextAlt}>Load more people</Text>
+              <Ionicons
+                name={'ios-people-outline'}
+                size={25}
+                color={colors.mediumRed}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     )
   }
@@ -86,6 +116,7 @@ const styles = StyleSheet.create({
   imageCont: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'space-around'
   },
   button: {
     backgroundColor: colors.black,
@@ -100,8 +131,28 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginRight: 4,
   },
+  buttonAlt: {
+    backgroundColor: colors.white,
+    padding: 13,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  buttonTextAlt: {
+    color: colors.black,
+    fontFamily: font.thin,
+    fontSize: 20,
+    marginRight: 4,
+  },
   title: {
     color: colors.white,
+    fontFamily: font.regular,
+    fontSize: 22,
+    marginHorizontal: 20,
+    marginTop: 8,
+  },
+  titleAlt: {
+    color: colors.black,
     fontFamily: font.regular,
     fontSize: 22,
     marginHorizontal: 20,

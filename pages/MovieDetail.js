@@ -67,7 +67,12 @@ class MovieDetail extends Component {
               images={movie.images.backdrops.reverse()}
               cast={movie.credits.cast}
             />
-            <ImageScroller />
+            <ImageScroller
+              title="Recommended Movies"
+              onPress={id =>
+                this.props.navigation.navigate('MovieDetail', { id })}
+              recs={movie.recommendations.results}
+            />
           </View>
         )}
       </ScrollView>

@@ -12,6 +12,13 @@ export default gql`
       vote_average
       release_date
       runtime
+      recommendations {
+        results {
+          poster_path
+          id
+          title
+        }
+      }
       genres {
         name
       }

@@ -35,7 +35,9 @@ class ImageList extends Component {
     movies: [],
   }
   componentDidMount() {
-    this.scroll.scrollTo(0)
+    if (!this.props.cast) {
+      this.scroll.scrollTo(0)
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.filter !== nextProps.filter) {
@@ -56,42 +58,47 @@ class ImageList extends Component {
     //   this.props.onScrollBottom()
     // }
   }
+  renderCast = () =>
+    this.props.castMembers.map(person => (
+      <Image
+        third
+        key={person.name}
+        imgPath={person.profile_path}
+        name={person.name}
+      />
+    ))
 
-  renderMovies = () => {
-    this.props.cast
-      ? this.props.castMembers.map((person, i) => (
-          <Image
-            offset={i % 2 === 0}
-            key={person.name}
-            imgPath={person.profile_path}
-          />
-        ))
-      : this.props.movies.map((movie, i) => (
-          <Image
-            offset={i % 2 === 0}
-            key={movie.id}
-            onClick={id => this.props.onClick(id)}
-            id={movie.id}
-            imgPath={movie.poster_path}
-          />
-        ))
-  }
+  renderMovies = () =>
+    this.props.movies.map((movie, i) => (
+      <Image
+        offset={i % 2 === 0}
+        key={movie.id}
+        onClick={id => this.props.onClick(id)}
+        id={movie.id}
+        imgPath={movie.poster_path}
+      />
+    ))
+
   render() {
     return (
       <View>
-        <ScrollView
-          ref={scroll => (this.scroll = scroll)}
-          contentContainerStyle={styles.scroll}
-          onScroll={this.props.onScrollBottom && this.onScroll}>
-          {this.renderMovies()}
-          {this.props.onLoadMore && (
-            <TouchableOpacity
-              onPress={this.props.onLoadMore}
-              style={styles.button}>
-              <Text style={styles.buttonText}>Load More</Text>
-            </TouchableOpacity>
-          )}
-        </ScrollView>
+        {this.props.cast ? (
+          <View style={styles.scroll}>{this.renderCast()}</View>
+        ) : (
+          <ScrollView
+            ref={scroll => (this.scroll = scroll)}
+            contentContainerStyle={styles.scroll}
+            onScroll={this.props.onScrollBottom && this.onScroll}>
+            {this.renderMovies()}
+            {this.props.onLoadMore && (
+              <TouchableOpacity
+                onPress={this.props.onLoadMore}
+                style={styles.button}>
+                <Text style={styles.buttonText}>Load More</Text>
+              </TouchableOpacity>
+            )}
+          </ScrollView>
+        )}
       </View>
     )
   }
