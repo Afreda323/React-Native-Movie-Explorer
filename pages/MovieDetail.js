@@ -66,16 +66,6 @@ class MovieDetail extends Component {
       </TouchableOpacity>
     ),
   })
-  componentDidMount() {
-    console.log(
-      this.props.watched,
-      this.props.notWatched,
-      this.props.watched.concat(this.props.notWatched),
-      this.props.watched
-        .concat(this.props.notWatched)
-        .filter(mov => mov.id === movie.id).length > 0
-    )
-  }
   addMovie = () => {
     this.props.addMovie(this.props.data.movie)
   }
@@ -85,7 +75,6 @@ class MovieDetail extends Component {
   render() {
     const { watched, notWatched } = this.props
     const { loading, movie } = this.props.data
-    const exists = watched.concat(notWatched).filter(mov => mov.id === movie.id).length > 0
     return (
       <ScrollView style={styles.page}>
         {loading && (
@@ -104,21 +93,28 @@ class MovieDetail extends Component {
               rating={movie.vote_average}
               totalReviews={movie.vote_count}
               tagline={movie.tagline}
-              added={exists}
+              added={
+                watched.concat(notWatched).filter(mov => mov.id === movie.id)
+                  .length > 0
+              }
               onAdd={this.addMovie}
               onRemove={this.removeMovie}
             />
             <MovieDescription overview={movie.overview} />
-            <MovieMedia
-              images={movie.images.backdrops.reverse()}
-              cast={movie.credits.cast}
-            />
-            <ImageScroller
-              title="Recommended Movies"
-              onPress={id =>
-                this.props.navigation.navigate('MovieDetail', { id })}
-              recs={movie.recommendations.results}
-            />
+            {movie.images && (
+              <MovieMedia
+                images={movie.images.backdrops.reverse()}
+                cast={movie.credits.cast}
+              />
+            )}
+            {movie.recommendations && (
+              <ImageScroller
+                title="Recommended Movies"
+                onPress={id =>
+                  this.props.navigation.navigate('MovieDetail', { id })}
+                recs={movie.recommendations.results}
+              />
+            )}
           </View>
         )}
       </ScrollView>
@@ -130,7 +126,8 @@ const mstp = ({ watchlist: { watched, notWatched } }) => ({
   watched,
   notWatched,
 })
-const withRedux = component => connect(mstp, { addMovie, removeMovie })(component)
+const withRedux = component =>
+  connect(mstp, { addMovie, removeMovie })(component)
 
 const withApollo = component =>
   graphql(movieQuery, {

@@ -112,11 +112,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingBottom: 20,
   },
   button: {
     width: width / 2,
-    height: width / 2 * 3 / 4,
+    height: width / 2 * 3 / 5,
     margin: 4,
     alignItems: 'center',
     justifyContent: 'center',

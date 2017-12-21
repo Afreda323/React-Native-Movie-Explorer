@@ -1,16 +1,18 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { Font } from 'expo'
+
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloProvider } from 'react-apollo'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import Navigation from './Navigation'
-import reducer from './reducers/'
 
-const store = createStore(reducer)
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/es/integration/react'
+import createStore from './store/'
+
+import Navigation from './Navigation'
+import Loader from './components/Loader'
 
 const client = new ApolloClient({
   link: new HttpLink({
@@ -18,6 +20,7 @@ const client = new ApolloClient({
   }),
   cache: new InMemoryCache(),
 })
+const { persistor, store } = createStore()
 
 export default class App extends React.Component {
   state = {
@@ -35,7 +38,9 @@ export default class App extends React.Component {
     return this.state.fonts ? (
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <Navigation />
+          <PersistGate loading={<Loader />} persistor={persistor}>
+            <Navigation />
+          </PersistGate>
         </Provider>
       </ApolloProvider>
     ) : null

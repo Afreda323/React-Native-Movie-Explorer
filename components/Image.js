@@ -16,7 +16,7 @@ import font from '../constants/fontFamily'
 
 const PATH = 'http://image.tmdb.org/t/p/original'
 const { width } = Dimensions.get('window')
-const OFFSET = width / 2 * 3 / 2 / 2
+const OFFSET = width / 2 * (3 / 2) / 2
 
 class Img extends Component {
   static propTypes = {
@@ -24,9 +24,13 @@ class Img extends Component {
     onClick: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired,
     offset: PropTypes.bool,
+    third: PropTypes.bool,
+    horizontal: PropTypes.bool,
+    name: PropTypes.string,
   }
   state = {
     imageOpacity: new Animated.Value(0),
+    name: false,
   }
   onLoadImage() {
     Animated.timing(this.state.imageOpacity, {
@@ -42,7 +46,8 @@ class Img extends Component {
         style={
           horizontal ? styles.horizontal : third ? styles.third : styles.touch
         }
-        onPress={() => (onClick ? onClick(id) : null)}>
+        onPress={() =>
+          name ? this.setState({ name: !this.state.name }) : onClick(id)}>
         <Animated.Image
           onLoad={() => this.onLoadImage()}
           style={[
@@ -52,7 +57,7 @@ class Img extends Component {
           ]}
           source={{ uri: `${PATH}${imgPath}` }}
         />
-        {name && <Text style={styles.text}>{name}</Text>}
+        {name && this.state.name && <Text style={styles.text}>{name}</Text>}
       </TouchableOpacity>
     )
   }
@@ -76,19 +81,19 @@ const styles = StyleSheet.create({
   },
   img: {
     width: '100%',
-    height: width / 2 * 3 / 2,
+    height: width / 2 * (3 / 2),
     margin: 4,
     opacity: 0,
   },
   thirdImg: {
     width: '100%',
-    height: width / 2 * 3 / 3,
+    height: width / 3 * (3 / 2),
     margin: 1,
     opacity: 0,
   },
   horizImg: {
     width: '100%',
-    height: width / 2 * 3 / 3.3,
+    height: width / 3.3 * (3 / 2),
     margin: 1,
     opacity: 0,
   },
@@ -96,10 +101,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    width: '100%',
     fontFamily: font.thin,
-    color: colors.white,
-    backgroundColor: 'rgba(0,0,0,.7)',
+    color: colors.black,
+    backgroundColor: colors.white,
     paddingHorizontal: 10,
     paddingVertical: 5,
     fontSize: 16,
