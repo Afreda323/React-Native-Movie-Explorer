@@ -39,7 +39,7 @@ class ImageList extends Component {
   }
   componentDidMount() {
     if (!this.props.cast) {
-      this.scroll.scrollTo(0)
+      this.scroll.scrollTo({ x: 0, y: 0, animated: true })
     }
   }
   componentWillReceiveProps(nextProps) {

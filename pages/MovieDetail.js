@@ -11,8 +11,10 @@ import {
 import { Ionicons } from '@expo/vector-icons'
 
 import { compose, graphql } from 'react-apollo'
+import { connect } from 'react-redux'
 
 import movieQuery from '../query/movie'
+import { addMovie, removeMovie } from '../actions/watchlist.actions'
 
 import MovieHeader from '../components/MovieHeader'
 import MovieDescription from '../components/MovieDescription'
@@ -57,15 +59,33 @@ class MovieDetail extends Component {
             fontFamily: font.thin,
             color: colors.white,
             paddingLeft: 5,
-            fontSize: 15
+            fontSize: 15,
           }}>
           Go back
         </Text>
       </TouchableOpacity>
     ),
   })
+  componentDidMount() {
+    console.log(
+      this.props.watched,
+      this.props.notWatched,
+      this.props.watched.concat(this.props.notWatched),
+      this.props.watched
+        .concat(this.props.notWatched)
+        .filter(mov => mov.id === movie.id).length > 0
+    )
+  }
+  addMovie = () => {
+    this.props.addMovie(this.props.data.movie)
+  }
+  removeMovie = () => {
+    this.props.removeMovie(this.props.data.movie)
+  }
   render() {
+    const { watched, notWatched } = this.props
     const { loading, movie } = this.props.data
+    const exists = watched.concat(notWatched).filter(mov => mov.id === movie.id).length > 0
     return (
       <ScrollView style={styles.page}>
         {loading && (
@@ -84,6 +104,9 @@ class MovieDetail extends Component {
               rating={movie.vote_average}
               totalReviews={movie.vote_count}
               tagline={movie.tagline}
+              added={exists}
+              onAdd={this.addMovie}
+              onRemove={this.removeMovie}
             />
             <MovieDescription overview={movie.overview} />
             <MovieMedia
@@ -103,6 +126,12 @@ class MovieDetail extends Component {
   }
 }
 
+const mstp = ({ watchlist: { watched, notWatched } }) => ({
+  watched,
+  notWatched,
+})
+const withRedux = component => connect(mstp, { addMovie, removeMovie })(component)
+
 const withApollo = component =>
   graphql(movieQuery, {
     options: ({ navigation }) => {
@@ -114,7 +143,7 @@ const withApollo = component =>
     },
   })(component)
 
-export default compose(withApollo)(MovieDetail)
+export default compose(withRedux, withApollo)(MovieDetail)
 
 const styles = StyleSheet.create({
   page: {

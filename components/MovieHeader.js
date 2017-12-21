@@ -9,6 +9,7 @@ import {
   StatusBar,
   Platform,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import { LinearGradient } from 'expo'
@@ -31,6 +32,9 @@ class MovieHeader extends Component {
     length: PropTypes.number,
     rating: PropTypes.number,
     totalReviews: PropTypes.number,
+    added: PropTypes.bool,
+    onAdd: PropTypes.func,
+    onRemove: PropTypes.func,
   }
   state = {
     backOpacity: new Animated.Value(0),
@@ -41,7 +45,7 @@ class MovieHeader extends Component {
       duration: 250,
     }).start()
   }
-  renderGenres = () => (
+  renderGenres = genres => (
     <ScrollView
       horizontal
       style={{
@@ -53,7 +57,7 @@ class MovieHeader extends Component {
           size={20}
           color={colors.white}
         />{' '}
-        {this.props.genres.map(({ name }) => name + ', ')}
+        {genres.map(({ name }) => name + ', ')}
       </Text>
     </ScrollView>
   )
@@ -66,7 +70,7 @@ class MovieHeader extends Component {
       .add(time, 'minutes')
       .format('hh:mm')
       .split(':')
-    const hours = times[0] == 12 ? "0" : String(parseInt(times[0]))
+    const hours = times[0] == 12 ? '0' : String(parseInt(times[0]))
     const minutes = String(parseInt(times[1]))
     return `${hours}h${minutes}m`
   }
@@ -80,6 +84,9 @@ class MovieHeader extends Component {
       rating,
       totalReviews,
       tagline,
+      added,
+      onAdd,
+      onRemove
     } = this.props
     return (
       <View>
@@ -96,16 +103,7 @@ class MovieHeader extends Component {
         <View style={styles.textWrap}>
           {this.renderTitle(title)}
           <Text style={styles.subtitle}>{tagline}</Text>
-          <View
-            style={{
-              backgroundColor: colors.mediumRed,
-              height: 2,
-              width: 50,
-              marginTop: 5,
-              marginBottom: 8,
-              marginHorizontal: 20,
-            }}
-          />
+          <View style={styles.hr} />
           <View
             style={{
               flexDirection: 'row',
@@ -129,7 +127,7 @@ class MovieHeader extends Component {
               {this.convertTime(length)}
             </Text>
           </View>
-          {this.renderGenres()}
+          {this.renderGenres(genres)}
           <Text style={styles.rating}>
             <Ionicons
               name={'ios-star-outline'}
@@ -138,6 +136,25 @@ class MovieHeader extends Component {
             />{' '}
             {rating}/10 from {totalReviews} reviews.
           </Text>
+          {added ? (
+            <TouchableOpacity style={styles.button} onPress={onRemove}>
+              <Text style={styles.watchlist}>Remove from watchlist</Text>
+              <Ionicons
+                name={'ios-remove-circle-outline'}
+                size={20}
+                color={colors.white}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.button} onPress={onAdd}>
+              <Text style={styles.watchlist}>Add to watchlist</Text>
+              <Ionicons
+                name={'ios-add-circle-outline'}
+                size={20}
+                color={colors.white}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     )
@@ -147,10 +164,34 @@ class MovieHeader extends Component {
 export default MovieHeader
 
 const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: colors.mediumRed,
+    borderRadius: 40,
+    marginHorizontal: 50,
+    marginTop: 10,
+  },
+  watchlist: {
+    fontFamily: font.thin,
+    color: colors.white,
+    fontSize: 20,
+    padding: 5,
+  },
   backdrop: {
     width: width + 50,
     height: (width + 50) * (1 / 1.7),
     marginLeft: -25,
+  },
+  hr: {
+    backgroundColor: colors.mediumRed,
+    height: 2,
+    width: 50,
+    marginTop: 5,
+    marginBottom: 8,
+    marginHorizontal: 20,
   },
   gradient: {
     position: 'absolute',

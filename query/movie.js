@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 export default gql`
   query($id: String!) {
     movie(id: $id) {
+      id
       title
       poster_path
       backdrop_path
