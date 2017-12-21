@@ -45,8 +45,6 @@ class Movies extends Component {
   })
   componentDidMount() {
     StatusBar.setBarStyle('light-content', true)
-    this.props.navigation.navigate('MovieDetail', { id: "181808" })
-    
   }
   handleFilter = filter => {
     if (filter === 'popular') {

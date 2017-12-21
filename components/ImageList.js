@@ -10,6 +10,9 @@ import {
 import PropTypes from 'prop-types'
 import Image from './Image'
 
+import colors from '../constants/colors'
+import font from '../constants/fontFamily'
+
 const { width } = Dimensions.get('window')
 const OFFSET = width / 2 * 3 / 2 / 2
 
@@ -41,7 +44,7 @@ class ImageList extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.filter !== nextProps.filter) {
-      this.scroll.scrollTo(0)
+      this.scroll.scrollTo({ x: 0, y: 0, animated: true })
     }
   }
 
@@ -93,7 +96,7 @@ class ImageList extends Component {
             {this.props.onLoadMore && (
               <TouchableOpacity
                 onPress={this.props.onLoadMore}
-                style={styles.button}>
+                style={[styles.button, styles.offset]}>
                 <Text style={styles.buttonText}>Load More</Text>
               </TouchableOpacity>
             )}
@@ -109,17 +112,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    paddingBottom: 20,
   },
   button: {
-    width: '100%',
+    width: width / 2,
+    height: width / 2 * 3 / 4,
     margin: 4,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0f0f0f',
   },
+  offset: {
+    marginTop: -OFFSET,
+  },
   buttonText: {
-    fontSize: 20,
-    color: '#fff',
+    fontSize: 26,
+    color: colors.white,
+    fontFamily: font.thin,
   },
 })
 export default ImageList

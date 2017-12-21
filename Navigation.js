@@ -34,7 +34,6 @@ const MainScreens = TabNavigator(
         color: colors.white,
         fontFamily: font.thin,
       },
-      activeTintColor: colors.mediumRed
     },
   }
 )

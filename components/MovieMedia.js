@@ -61,7 +61,11 @@ class MovieMedia extends Component {
         />
         <View style={styles.imageCont}>
           {this.state.images.map(image => (
-            <View style={{ width: width / 2 - 4, height: width / 2 / 1.777777777777778 }}>
+            <View
+              style={{
+                width: width / 2 - 4,
+                height: width / 2 / 1.777777777777778,
+              }}>
               <Image
                 resizeMode="contain"
                 style={{ width: '100%', height: '100%' }}
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
   imageCont: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   button: {
     backgroundColor: colors.black,

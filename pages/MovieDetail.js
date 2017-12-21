@@ -6,7 +6,9 @@ import {
   Platform,
   StatusBar,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 
 import { compose, graphql } from 'react-apollo'
 
@@ -37,10 +39,31 @@ class MovieDetail extends Component {
     headerBackTitleStyle: {
       color: colors.white,
     },
+    headerLeft: () => (
+      <TouchableOpacity
+        style={{
+          paddingHorizontal: 5,
+          alignItems: 'center',
+          flexDirection: 'row',
+        }}
+        onPress={() => navigation.goBack()}>
+        <Ionicons
+          name={'ios-arrow-dropleft-outline'}
+          size={30}
+          color={'#fff'}
+        />
+        <Text
+          style={{
+            fontFamily: font.thin,
+            color: colors.white,
+            paddingLeft: 5,
+            fontSize: 15
+          }}>
+          Go back
+        </Text>
+      </TouchableOpacity>
+    ),
   })
-  componentDidMount() {
-    console.log(this.props)
-  }
   render() {
     const { loading, movie } = this.props.data
     return (
