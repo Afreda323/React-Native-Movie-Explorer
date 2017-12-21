@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Platform, StatusBar } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  StatusBar,
+  ScrollView,
+} from 'react-native'
 
 import { compose, graphql } from 'react-apollo'
 
@@ -20,6 +27,7 @@ class MovieDetail extends Component {
       backgroundColor: colors.black,
       paddingTop: 10,
       marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+      borderBottomWidth: 0,
     },
     headerTitleStyle: {
       color: colors.white,
@@ -27,8 +35,8 @@ class MovieDetail extends Component {
       fontFamily: font.regular,
     },
     headerBackTitleStyle: {
-      color: colors.mediumRed
-    }
+      color: colors.white,
+    },
   })
   componentDidMount() {
     console.log(this.props)
@@ -36,22 +44,33 @@ class MovieDetail extends Component {
   render() {
     const { loading, movie } = this.props.data
     return (
-      <View style={styles.page}>
+      <ScrollView style={styles.page}>
         {loading && (
           <Text style={{ color: colors.white, fontFamily: font.thin }}>
             Loading...
           </Text>
         )}
         {movie && (
-          <Text style={{ color: colors.white, fontFamily: font.thin }}>
-            {movie.title}
-          </Text>
+          <View>
+            <MovieHeader
+              title={movie.title}
+              backdrop={movie.backdrop_path}
+              genres={movie.genres}
+              releaseDate={movie.release_date}
+              length={movie.runtime}
+              rating={movie.vote_average}
+              totalReviews={movie.vote_count}
+              tagline={movie.tagline}
+            />
+            <MovieDescription overview={movie.overview} />
+            <MovieMedia
+              images={movie.images.backdrops.reverse()}
+              cast={movie.credits.cast}
+            />
+            <ImageScroller />
+          </View>
         )}
-        <MovieHeader />
-        <MovieDescription />
-        <MovieMedia />
-        <ImageScroller />
-      </View>
+      </ScrollView>
     )
   }
 }

@@ -21,6 +21,8 @@ import SearchResults from '../components/SearchResults'
 import colors from '../constants/colors'
 import font from '../constants/fontFamily'
 
+import debounce from 'lodash/debounce'
+
 class Search extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Search',
@@ -47,26 +49,27 @@ class Search extends Component {
     StatusBar.setBarStyle('light-content', true)
   }
   render() {
-    const { data } = this.props
+    const { data, navigation } = this.props
+    const { navigate } = navigation
     return (
       <View style={styles.page}>
         <Searchbar
-          value={this.props.searchInput}
+          value={ this.props.searchInput}
           onChange={this.props.updateSearchInput}
           onClear={this.props.clearSearchInput}
         />
+        {data &&
+        data.search && (
+          <SearchResults
+            onClick={id => navigate('MovieDetail', { id })}
+            results={data.search.results}
+          />
+        )}
         {data &&
         data.loading && (
           <Text style={{ color: colors.white, fontFamily: font.thin }}>
             Loading...
           </Text>
-        )}
-        {data &&
-        data.search && (
-          <SearchResults
-            onClick={id => alert(id)}
-            results={data.search.results}
-          />
         )}
       </View>
     )

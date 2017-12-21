@@ -7,6 +7,7 @@ export default gql`
       poster_path
       backdrop_path
       overview
+      tagline
       vote_count
       vote_average
       release_date

@@ -8,9 +8,13 @@ import {
   Animated,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { Ionicons } from '@expo/vector-icons'
+
+import colors from '../constants/colors'
 
 const PATH = 'http://image.tmdb.org/t/p/original'
 const { width } = Dimensions.get('window')
+const OFFSET = width / 2 * 3 / 2 / 2
 
 class Img extends Component {
   static propTypes = {
@@ -27,11 +31,14 @@ class Img extends Component {
       toValue: 1,
       duration: 250,
     }).start()
+    this.setState({ loaded: true })
   }
   render() {
     const { onClick, imgPath, id, offset } = this.props
     return (
-      <TouchableOpacity style={styles.touch} onPress={() => onClick(id)}>
+      <TouchableOpacity
+        style={styles.touch}
+        onPress={() => (onClick ? onClick(id) : null)}>
         <Animated.Image
           onLoad={() => this.onLoadImage()}
           style={[
@@ -52,7 +59,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   offset: {
-    marginTop: -(width / 2 * 3 / 2 / 2),
+    marginTop: -OFFSET,
   },
   img: {
     width: '100%',

@@ -45,6 +45,8 @@ class Movies extends Component {
   })
   componentDidMount() {
     StatusBar.setBarStyle('light-content', true)
+    this.props.navigation.navigate('MovieDetail', { id: "181808" })
+    
   }
   handleFilter = filter => {
     if (filter === 'popular') {
@@ -65,11 +67,6 @@ class Movies extends Component {
     }
     return (
       <View style={styles.page}>
-        {loading && (
-          <Text style={{ color: colors.white, fontFamily: font.thin }}>
-            Loading...
-          </Text>
-        )}
         <FilterList
           active={this.handleFilter(this.props.activeFilter)}
           filters={['Popular', 'Coming Soon', 'Now Playing', 'Top Rated']}
@@ -78,10 +75,20 @@ class Movies extends Component {
         {other && (
           <ImageList
             filter={this.handleFilter(this.props.activeFilter)}
-            onScrollBottom={this.props.loadMoreEntries}
+            onLoadMore={this.props.loadMoreEntries}
             movies={other.results}
-            onClick={(id, title) => navigate('MovieDetail', { id, title })}
+            onClick={id => navigate('MovieDetail', { id })}
           />
+        )}
+        {loading && (
+          <Text
+            style={{
+              color: colors.white,
+              fontFamily: font.thin,
+              fontSize: 20,
+            }}>
+            Loading...
+          </Text>
         )}
       </View>
     )

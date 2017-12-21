@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import font from '../constants/fontFamily'
-import colors from '../constants/colors'
 import { LinearGradient } from 'expo'
 import { Ionicons } from '@expo/vector-icons'
+
+import font from '../constants/fontFamily'
+import colors from '../constants/colors'
 
 class Searchbar extends Component {
   static propTypes = {
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     zIndex: 3,
     position: 'relative',
-    backgroundColor: 'rgba(0,0,0,.8)'
+    backgroundColor: 'rgba(0,0,0,.5)'
   },
   iconLeft: {
     zIndex: 5,
