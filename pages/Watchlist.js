@@ -44,13 +44,14 @@ class Watchlist extends Component {
       navigation
     } = this.props
     return (
-      <ScrollView style={styles.page}>
+      <View style={styles.page}>
         <FilterList
           active={active}
           filters={['Not Watched', 'Watched']}
           onPress={val => toggleActive(val)}
           even
         />
+        <ScrollView>
         <WatchlistList
           active={active}
           watched={watched}
@@ -59,7 +60,8 @@ class Watchlist extends Component {
           onNotWatched={makeNotWatched}
           onSelect={id => navigation.navigate('MovieDetail', { id })}
         />
-      </ScrollView>
+        </ScrollView>
+      </View>
     )
   }
 }

@@ -83,7 +83,7 @@ class SearchResult extends Component {
             </View>
             {onNotWatched ? (
               <TouchableOpacity
-                style={{ paddingVertical: 10, marginTop: -7 }}
+                style={{ paddingVertical: 10, marginTop: -5 }}
                 onPress={() => onNotWatched(id)}>
                 <View style={styles.button}>
                   <Text style={styles.buttonText}>Mark as not watched</Text>
@@ -92,7 +92,7 @@ class SearchResult extends Component {
             ) : null}
             {onWatched ? (
               <TouchableOpacity
-                style={{ paddingVertical: 10, marginTop: -7 }}
+                style={{ paddingVertical: 10, marginTop: -5 }}
                 onPress={() => onWatched(id)}>
                 <View style={styles.button}>
                   <Text style={styles.buttonText}>Mark as watched</Text>
@@ -143,8 +143,9 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: font.bold,
     marginRight: 10,
-    fontSize: 22,
+    fontSize: 24,
     backgroundColor: 'transparent',
+    marginTop: -4
   },
   textWrap: {
     width: width / 4 * 3,

@@ -11,9 +11,6 @@ import font from './constants/fontFamily'
 
 const MainScreens = TabNavigator(
   {
-    Watchlist: {
-      screen: Watchlist,
-    },
     Movies: {
       screen: Movies,
     },
@@ -23,8 +20,12 @@ const MainScreens = TabNavigator(
     Search: {
       screen: Search,
     },
+    Watchlist: {
+      screen: Watchlist,
+    },
   },
   {
+    initialRouteName: 'Watchlist',
     tabBarPosition: 'bottom',
     tabBarOptions: {
       style: {

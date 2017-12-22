@@ -45,8 +45,8 @@ export default function(state = initial, action) {
       )
       return {
         ...state,
-        notWatched: newWatched,
-        watched: newNotWatched,
+        notWatched: newNotWatched,
+        watched: newWatched,
       }
     default:
       return state
