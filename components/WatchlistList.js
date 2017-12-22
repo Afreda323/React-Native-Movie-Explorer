@@ -11,8 +11,8 @@ class WatchlistList extends Component {
         <SearchResult
           result={movie}
           onClick={this.props.onSelect}
-          onWatched={watched ? null : this.props.onWatched }
-          onNotWatched={watched ?this.props.onNotWatched : null }
+          onWatched={watched ? null : this.props.onWatched}
+          onNotWatched={watched ? this.props.onNotWatched : null}
         />
       ))
   render() {

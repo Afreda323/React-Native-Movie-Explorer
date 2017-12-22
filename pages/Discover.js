@@ -1,36 +1,128 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Platform, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+
+import { connect } from 'react-redux'
+import { graphql, compose } from 'react-apollo'
+
+// GIVE ROLE TO CAST
+
+import * as actions from '../actions/discover.actions'
+import discover from '../query/discover'
 
 import ImageList from '../components/ImageList'
 import FilterModal from '../components/FilterModal'
 
+import colors from '../constants/colors'
+import font from '../constants/fontFamily'
+
 class Discover extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: 'Discover',
     headerStyle: {
-      backgroundColor: 'rgba(0,0,0,.7)',
+      backgroundColor: colors.black,
+      paddingTop: 10,
+      marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
     },
     headerTitleStyle: {
-      color: '#fff',
+      color: colors.white,
+      fontSize: 18,
+      fontFamily: font.regular,
     },
 
     tabBarIcon: ({ tintColor, focused }) => (
       <Ionicons
         name={focused ? 'ios-eye' : 'ios-eye-outline'}
         size={30}
-        color={focused ? '#c32b2b' : '#fff'}
+        color={focused ? colors.mediumRed : colors.white}
       />
     ),
-  }
+  })
   render() {
+    const { updateYear, updateMinRating, updateSort, year, sort, minRating } = this.props
+    const { discover, error, loading } = this.props.data
+    const { navigate } = this.props.navigation
+    if (error) {
+      console.log(error)
+    }
     return (
-      <View>
-        <Text>Discover</Text>
-        <FilterModal />
+      <View style={styles.page}>
+        <FilterModal
+          sortType={sort}
+          year={year}
+          minRating={minRating}
+          onSelectYear={updateYear}
+          onSelectSort={updateSort}
+          onMinRating={updateMinRating}
+        />
+        {discover && (
+          <ImageList
+            onLoadMore={this.props.loadMoreEntries}
+            movies={discover.results}
+            onClick={id => navigate('MovieDetail', { id })}
+          />
+        )}
+        {loading && (
+          <Text
+            style={{
+              color: colors.white,
+              fontFamily: font.thin,
+              fontSize: 20,
+            }}>
+            Loading...
+          </Text>
+        )}
       </View>
     )
   }
 }
 
-export default Discover
+const mapStateToProps = ({ discover: { minRating, year, sort } }) => ({
+  minRating,
+  year,
+  sort,
+})
+const withRedux = component => connect(mapStateToProps, actions)(component)
+
+const withApollo = component =>
+  graphql(discover, {
+    options: ({ minRating, year, sort }) => {
+      return { variables: { minRating, year, sort, page: 1 } }
+    },
+    props({ data }) {
+      return {
+        data,
+        loadMoreEntries() {
+          return data.fetchMore({
+            variables: {
+              page: data.discover.page + 1,
+            },
+            updateQuery: (previousResult, { fetchMoreResult }) => {
+              if (!fetchMoreResult) {
+                return previousResult
+              }
+              return Object.assign({}, previousResult, {
+                discover: {
+                  ...previousResult.discover,
+                  page: previousResult.discover.page + 1,
+                  results: [
+                    ...previousResult.discover.results,
+                    ...fetchMoreResult.discover.results,
+                  ],
+                },
+              })
+            },
+          })
+        },
+      }
+    },
+  })(component)
+
+export default compose(withRedux, withApollo)(Discover)
+
+const styles = StyleSheet.create({
+  page: {
+    backgroundColor: colors.black,
+    flex: 1,
+  },
+})

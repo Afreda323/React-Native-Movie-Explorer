@@ -4,6 +4,7 @@ import storage from 'redux-persist/es/storage'
 import reducers from '../reducers'
 const config = {
   storage,
+  key: 'key'
 }
 
 const reducer = persistCombineReducers(config, reducers)

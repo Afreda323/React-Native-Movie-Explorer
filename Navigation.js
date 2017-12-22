@@ -25,7 +25,7 @@ const MainScreens = TabNavigator(
     },
   },
   {
-    initialRouteName: 'Watchlist',
+    initialRouteName: 'Discover',
     tabBarPosition: 'bottom',
     tabBarOptions: {
       style: {

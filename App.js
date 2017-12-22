@@ -34,7 +34,11 @@ export default class App extends React.Component {
       'raleway-thin': require('./assets/Raleway-Light.ttf'),
     }).then(() => this.setState({ fonts: true }))
   }
+  componentDidCatch(e) {
+      console.log(e)
+    }
   render() {
+    
     return this.state.fonts ? (
       <ApolloProvider client={client}>
         <Provider store={store}>

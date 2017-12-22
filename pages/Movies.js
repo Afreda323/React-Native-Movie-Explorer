@@ -13,13 +13,14 @@ import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
 
 import * as actions from '../actions/movie.actions'
+import other from '../query/other'
 
 import ImageList from '../components/ImageList'
 import FilterList from '../components/FilterList'
 
 import colors from '../constants/colors'
 import font from '../constants/fontFamily'
-import other from '../query/other'
+
 
 class Movies extends Component {
   static navigationOptions = ({ navigation }) => ({
