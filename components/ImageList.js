@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   Dimensions,
+  Platform
 } from 'react-native'
 import PropTypes from 'prop-types'
 import Image from './Image'
@@ -68,13 +69,14 @@ class ImageList extends Component {
         key={person.name}
         imgPath={person.profile_path}
         name={person.name}
+        character={person.character}
       />
     ))
 
   renderMovies = () =>
     this.props.movies.map((movie, i) => (
       <Image
-        offset={i % 2 === 0}
+        offset={i % 2 === 0 && Platform.OS === 'ios'}
         key={movie.id}
         onClick={id => this.props.onClick(id)}
         id={movie.id}

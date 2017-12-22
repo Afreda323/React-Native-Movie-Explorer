@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Platform, StyleSheet, ScrollView } from 'react-native'
+import { View, Platform, StyleSheet, ScrollView, StatusBar } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 

@@ -62,7 +62,7 @@ class MovieHeader extends Component {
     </ScrollView>
   )
   renderTitle = title =>
-    title.split(': ').map(sub => <Text style={styles.title}>{sub}</Text>)
+    title.split(': ').map(sub => <Text key={sub} style={styles.title}>{sub}</Text>)
   convertTime = time => {
     const times = moment
       .utc()
@@ -95,6 +95,7 @@ class MovieHeader extends Component {
           style={styles.gradient}
         />
         <Animated.Image
+          resizeMethod="resize"
           onLoad={() => this.onLoadBack()}
           style={[styles.backdrop, { opacity: this.state.backOpacity }]}
           source={{ uri: `${PATH}${backdrop}` }}

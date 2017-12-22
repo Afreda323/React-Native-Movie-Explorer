@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Platform, StyleSheet } from 'react-native'
+import { View, Text, Platform, StyleSheet, StatusBar } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
 import { connect } from 'react-redux'
@@ -28,6 +28,7 @@ class Discover extends Component {
       color: colors.white,
       fontSize: 18,
       fontFamily: font.regular,
+      alignSelf: 'center'
     },
 
     tabBarIcon: ({ tintColor, focused }) => (
@@ -39,7 +40,14 @@ class Discover extends Component {
     ),
   })
   render() {
-    const { updateYear, updateMinRating, updateSort, year, sort, minRating } = this.props
+    const {
+      updateYear,
+      updateMinRating,
+      updateSort,
+      year,
+      sort,
+      minRating,
+    } = this.props
     const { discover, error, loading } = this.props.data
     const { navigate } = this.props.navigation
     if (error) {
@@ -53,7 +61,7 @@ class Discover extends Component {
           minRating={minRating}
           onSelectYear={updateYear}
           onSelectSort={updateSort}
-          onMinRating={updateMinRating}
+          onMinRatingChange={updateMinRating}
         />
         {discover && (
           <ImageList

@@ -2,7 +2,7 @@ import { DISCOVER } from '../actions/discover.actions'
 
 const initial = {
   sort: 'popularity.desc',
-  minRating: 0,
+  minRating: 7.0,
   year: '2016',
 }
 

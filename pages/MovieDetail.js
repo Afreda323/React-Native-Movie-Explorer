@@ -103,7 +103,7 @@ class MovieDetail extends Component {
             <MovieDescription overview={movie.overview} />
             {movie.images && (
               <MovieMedia
-                images={movie.images.backdrops.reverse()}
+                images={movie.images.backdrops}
                 cast={movie.credits.cast}
               />
             )}

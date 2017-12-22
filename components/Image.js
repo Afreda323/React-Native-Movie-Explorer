@@ -20,9 +20,9 @@ const OFFSET = width / 2 * (3 / 2) / 2
 
 class Img extends Component {
   static propTypes = {
-    imgPath: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    id: PropTypes.string.isRequired,
+    imgPath: PropTypes.string,
+    onClick: PropTypes.func,
+    id: PropTypes.string,
     offset: PropTypes.bool,
     third: PropTypes.bool,
     horizontal: PropTypes.bool,
@@ -40,7 +40,16 @@ class Img extends Component {
     this.setState({ loaded: true })
   }
   render() {
-    const { onClick, imgPath, id, offset, third, name, horizontal } = this.props
+    const {
+      onClick,
+      imgPath,
+      id,
+      offset,
+      third,
+      name,
+      horizontal,
+      character,
+    } = this.props
     return (
       <TouchableOpacity
         style={
@@ -49,6 +58,7 @@ class Img extends Component {
         onPress={() =>
           name ? this.setState({ name: !this.state.name }) : onClick(id)}>
         <Animated.Image
+          resizeMethod="resize"
           onLoad={() => this.onLoadImage()}
           style={[
             horizontal ? styles.horizImg : third ? styles.thirdImg : styles.img,
@@ -57,7 +67,12 @@ class Img extends Component {
           ]}
           source={{ uri: `${PATH}${imgPath}` }}
         />
-        {name && this.state.name && <Text style={styles.text}>{name}</Text>}
+        {this.state.name && (
+          <View style={styles.textWrap}>
+            {name && <Text style={styles.bold}>{name}</Text>}
+            {character && <Text style={styles.text}>{character}</Text>}
+          </View>
+        )}
       </TouchableOpacity>
     )
   }
@@ -97,16 +112,24 @@ const styles = StyleSheet.create({
     margin: 1,
     opacity: 0,
   },
-  text: {
+  textWrap: {
     position: 'absolute',
     bottom: 0,
     left: 0,
-    fontFamily: font.thin,
-    color: colors.black,
     backgroundColor: colors.white,
+  },
+  bold: {
+    fontFamily: font.regular,
+    color: colors.black,
     paddingHorizontal: 10,
-    paddingVertical: 5,
-    fontSize: 16,
+    paddingTop: 5,
+    fontSize: 12,
+  },
+  text: {
+    paddingHorizontal: 10,
+    fontSize: 10,
+    paddingBottom: 5,
+    fontFamily: font.thin,
   },
 })
 export default Img

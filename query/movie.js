@@ -44,6 +44,7 @@ export default gql`
         cast {
           name
           profile_path
+          character
         }
       }
     }

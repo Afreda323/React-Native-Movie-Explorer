@@ -1,4 +1,4 @@
-import { TabNavigator, StackNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator, TabBarBottom } from 'react-navigation'
 
 import Discover from './pages/Discover'
 import MovieDetail from './pages/MovieDetail'
@@ -27,11 +27,13 @@ const MainScreens = TabNavigator(
   {
     initialRouteName: 'Discover',
     tabBarPosition: 'bottom',
+    tabBarComponent: TabBarBottom,
     tabBarOptions: {
       style: {
         backgroundColor: colors.black,
       },
       labelStyle: {
+        textAlign: 'center',
         color: colors.white,
         fontFamily: font.thin,
       },

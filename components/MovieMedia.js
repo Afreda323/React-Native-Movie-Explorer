@@ -62,11 +62,13 @@ class MovieMedia extends Component {
         <View style={styles.imageCont}>
           {this.state.images.map(image => (
             <View
+              key={image.file_path}
               style={{
                 width: width / 2 - 4,
                 height: width / 2 / 1.777777777777778,
               }}>
               <Image
+                resizeMethod="resize"
                 resizeMode="contain"
                 style={{ width: '100%', height: '100%' }}
                 source={{ uri: `${PATH}${image.file_path}` }}

@@ -33,6 +33,7 @@ class Searchbar extends Component {
           <Ionicons name="ios-search" size={25} color={colors.white} />
         </View>
         <TextInput
+          underlineColorAndroid="transparent"
           value={this.props.value}
           onChangeText={this.props.onChange}
           placeholder="Enter your search"

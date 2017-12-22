@@ -19,7 +19,7 @@ class SearchResults extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
-      this.scroll.scrollTo(0)
+      this.scroll.scrollTo({ x: 0, y: 0, animated: true })
     }
   }
   renderResults = () => {

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  Slider
+  Slider,
 } from 'react-native'
 import PropTypes from 'prop-types'
 import range from 'lodash/range'
@@ -31,11 +31,12 @@ const YEARS = range(new Date().getFullYear(), 1900)
 
 class FilterModal extends Component {
   static propTypes = {
-    year: PropTypes.string,
+    year: PropTypes.number,
     onSelectYear: PropTypes.func,
     sortType: PropTypes.string,
     onSelectSort: PropTypes.func,
     minRating: PropTypes.number,
+    onMinRatingChange: PropTypes.func,
   }
   render() {
     return (
@@ -46,7 +47,11 @@ class FilterModal extends Component {
               <TouchableOpacity
                 key={year}
                 onPress={() => this.props.onSelectYear(year)}>
-                <Text style={[styles.item, this.props.year === year && styles.active]}>
+                <Text
+                  style={[
+                    styles.item,
+                    this.props.year === year && styles.active,
+                  ]}>
                   {year}
                 </Text>
               </TouchableOpacity>
@@ -59,14 +64,28 @@ class FilterModal extends Component {
               <TouchableOpacity
                 key={sort.value}
                 onPress={() => this.props.onSelectSort(sort.value)}>
-                <Text style={[styles.item, this.props.sortType === sort.value && styles.active]}>
+                <Text
+                  style={[
+                    styles.item,
+                    this.props.sortType === sort.value && styles.active,
+                  ]}>
                   {sort.name}
                 </Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
-        <Slider minimumValue={0} maximumValue={10} value={this.props.minRating}/>
+        <Slider
+          minimumValue={0}
+          maximumValue={10}
+          minimumTrackTintColor={colors.darkRed}
+          maximumTrackTintColor={colors.mediumRed}
+          thumbTintColor={colors.lightRed}
+          step={0.5}
+          value={this.props.minRating}
+          onSlidingComplete={this.props.onMinRatingChange}
+        />
+        <Text style={styles.min}>{this.props.minRating}</Text>
       </View>
     )
   }
@@ -86,5 +105,8 @@ const styles = StyleSheet.create({
   },
   active: {
     color: colors.mediumRed,
+  },
+  min: {
+    color: colors.white,
   },
 })
