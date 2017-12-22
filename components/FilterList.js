@@ -16,6 +16,7 @@ class FilterList extends Component {
     filters: PropTypes.array.isRequired,
     onClick: PropTypes.func,
     active: PropTypes.string.isRequired,
+    even: PropTypes.bool,
   }
   renderItems = () =>
     this.props.filters ? this.props.filters.map(filter => (
@@ -33,7 +34,7 @@ class FilterList extends Component {
   render() {
     return (
       <View style={styles.listWrap}>
-        <ScrollView contentContainerStyle={styles.wrap} horizontal={true}>
+        <ScrollView contentContainerStyle={[styles.wrap, this.props.even && styles.even]} horizontal={true}>
           {this.renderItems()}
         </ScrollView>
       </View>
@@ -53,6 +54,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     minWidth: '100%',
     paddingHorizontal: 15,
+  },
+  even: {
+   justifyContent: 'center',
+    minWidth: '100%',
   },
   filter: {
     color: colors.white,

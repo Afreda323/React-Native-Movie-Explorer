@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { View, Platform, StyleSheet } from 'react-native'
+import { View, Platform, StyleSheet, ScrollView } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux'
 
 import * as actions from '../actions/watchlist.actions'
 
+import FilterList from '../components/FilterList'
 import WatchlistList from '../components/WatchlistList'
 
 import colors from '../constants/colors'
@@ -33,18 +34,40 @@ class Watchlist extends Component {
     ),
   })
   render() {
-    const { watched, notWatched } = this.props
+    const {
+      watched,
+      notWatched,
+      active,
+      toggleActive,
+      makeNotWatched,
+      makeWatched,
+      navigation
+    } = this.props
     return (
-      <View style={styles.page}>
-        <WatchlistList watched={watched} notWatched={notWatched} />
-      </View>
+      <ScrollView style={styles.page}>
+        <FilterList
+          active={active}
+          filters={['Not Watched', 'Watched']}
+          onPress={val => toggleActive(val)}
+          even
+        />
+        <WatchlistList
+          active={active}
+          watched={watched}
+          notWatched={notWatched}
+          onWatched={makeWatched}
+          onNotWatched={makeNotWatched}
+          onSelect={id => navigation.navigate('MovieDetail', { id })}
+        />
+      </ScrollView>
     )
   }
 }
 
-const mapStateToProps = ({ watchlist: { watched, notWatched } }) => ({
+const mapStateToProps = ({ watchlist: { watched, notWatched, active } }) => ({
   watched,
   notWatched,
+  active,
 })
 export default connect(mapStateToProps, actions)(Watchlist)
 
@@ -54,4 +77,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 })
-

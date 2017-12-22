@@ -1,8 +1,7 @@
 import { createStore } from 'redux'
-import { persistStore, persistCombineReducers } from 'redux-persist'
+import { persistStore, persistCombineReducers, PURGE } from 'redux-persist'
 import storage from 'redux-persist/es/storage'
 import reducers from '../reducers'
-
 const config = {
   storage,
 }

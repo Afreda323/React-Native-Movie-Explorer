@@ -216,11 +216,12 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: colors.white,
-    fontFamily: font.bold,
+    fontFamily: font.regular,
     fontSize: 30,
     backgroundColor: 'transparent',
     lineHeight: 30,
     paddingHorizontal: 20,
+    opacity: .8
   },
   releaseDate: {
     color: colors.white,

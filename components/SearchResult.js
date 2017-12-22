@@ -9,6 +9,8 @@ import {
   Animated,
 } from 'react-native'
 import PropTypes from 'prop-types'
+import { Ionicons } from '@expo/vector-icons'
+
 import colors from '../constants/colors'
 import font from '../constants/fontFamily'
 
@@ -27,6 +29,8 @@ class SearchResult extends Component {
       overview: PropTypes.string,
     }),
     onClick: PropTypes.func,
+    onWatched: PropTypes.func,
+    onNotWatched: PropTypes.func,
   }
   state = {
     imageOpacity: new Animated.Value(0),
@@ -55,6 +59,7 @@ class SearchResult extends Component {
       backdrop_path,
       id,
     } = this.props.result
+    const { onWatched, onNotWatched } = this.props
     return (
       <TouchableOpacity onPress={() => this.props.onClick(id)}>
         <Animated.Image
@@ -76,6 +81,24 @@ class SearchResult extends Component {
               <Text style={styles.rating}>{vote_average}</Text>
               <Text style={styles.count}>{vote_count} Ratings</Text>
             </View>
+            {onNotWatched ? (
+              <TouchableOpacity
+                style={{ paddingVertical: 10, marginTop: -7 }}
+                onPress={() => onNotWatched(id)}>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Mark as not watched</Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
+            {onWatched ? (
+              <TouchableOpacity
+                style={{ paddingVertical: 10, marginTop: -7 }}
+                onPress={() => onWatched(id)}>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Mark as watched</Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
           </View>
         </View>
       </TouchableOpacity>
@@ -83,6 +106,24 @@ class SearchResult extends Component {
   }
 }
 const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: colors.mediumRed,
+    borderRadius: 40,
+    marginHorizontal: 8,
+    paddingHorizontal: 10,
+    zIndex: 100,
+  },
+  buttonText: {
+    fontFamily: font.thin,
+    color: colors.white,
+    padding: 5,
+    backgroundColor: 'transparent',
+    fontSize: 16,
+  },
   result: {
     width: '100%',
     flexDirection: 'row',
@@ -102,7 +143,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: font.bold,
     marginRight: 10,
-    fontSize: 16,
+    fontSize: 22,
     backgroundColor: 'transparent',
   },
   textWrap: {
@@ -129,6 +170,7 @@ const styles = StyleSheet.create({
   ratingWrap: {
     marginTop: 4,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   backdrop: {
     width: width / 4 * 3,
