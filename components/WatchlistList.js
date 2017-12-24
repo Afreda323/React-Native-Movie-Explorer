@@ -9,6 +9,7 @@ class WatchlistList extends Component {
       .sort((a, b) => a.title > b.title)
       .map(movie => (
         <SearchResult
+          key={movie.title}
           result={movie}
           onClick={this.props.onSelect}
           onWatched={watched ? null : this.props.onWatched}

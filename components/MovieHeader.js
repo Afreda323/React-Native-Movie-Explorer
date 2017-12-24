@@ -62,7 +62,13 @@ class MovieHeader extends Component {
     </ScrollView>
   )
   renderTitle = title =>
-    title.split(': ').map(sub => <Text key={sub} style={styles.title}>{sub}</Text>)
+    title.split(': ').map(sub => (
+      <Text
+        key={sub}
+        style={[styles.title, sub.length > 8 && styles.titleSmall]}>
+        {sub}
+      </Text>
+    ))
   convertTime = time => {
     const times = moment
       .utc()
@@ -86,7 +92,7 @@ class MovieHeader extends Component {
       tagline,
       added,
       onAdd,
-      onRemove
+      onRemove,
     } = this.props
     return (
       <View>
@@ -103,7 +109,13 @@ class MovieHeader extends Component {
         />
         <View style={styles.textWrap}>
           {this.renderTitle(title)}
-          <Text style={styles.subtitle}>{tagline}</Text>
+          <Text
+            style={[
+              styles.subtitle,
+              tagline.length > 14 && styles.subtitleSmall,
+            ]}>
+            {tagline}
+          </Text>
           <View style={styles.hr} />
           <View
             style={{
@@ -187,7 +199,9 @@ const styles = StyleSheet.create({
     marginLeft: -25,
   },
   hr: {
-    backgroundColor: colors.mediumRed,
+    backgroundColor: 'transparent',
+    borderBottomWidth: 2,
+    borderBottomColor: colors.mediumRed,
     height: 2,
     width: 50,
     marginTop: 5,
@@ -215,6 +229,10 @@ const styles = StyleSheet.create({
     lineHeight: 50,
     paddingHorizontal: 20,
   },
+  titleSmall: {
+    fontSize: 35,
+    lineHeight: 35,
+  },
   subtitle: {
     color: colors.white,
     fontFamily: font.regular,
@@ -222,7 +240,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     lineHeight: 30,
     paddingHorizontal: 20,
-    opacity: .8
+    opacity: 0.8,
+  },
+  subtitleSmall: {
+    fontSize: 20,
+    lineHeight: 20,
   },
   releaseDate: {
     color: colors.white,

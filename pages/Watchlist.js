@@ -23,6 +23,7 @@ class Watchlist extends Component {
       color: colors.white,
       fontSize: 18,
       fontFamily: font.regular,
+      alignSelf: 'center'
     },
 
     tabBarIcon: ({ tintColor, focused }) => (

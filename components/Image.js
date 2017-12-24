@@ -44,7 +44,6 @@ class Img extends Component {
       onClick,
       imgPath,
       id,
-      offset,
       third,
       name,
       horizontal,
@@ -62,7 +61,6 @@ class Img extends Component {
           onLoad={() => this.onLoadImage()}
           style={[
             horizontal ? styles.horizImg : third ? styles.thirdImg : styles.img,
-            offset && styles.offset,
             { opacity: this.state.imageOpacity },
           ]}
           source={{ uri: `${PATH}${imgPath}` }}
@@ -90,9 +88,6 @@ const styles = StyleSheet.create({
   horizontal: {
     width: width / 3.3 - 2,
     position: 'relative',
-  },
-  offset: {
-    marginTop: -OFFSET,
   },
   img: {
     width: '100%',

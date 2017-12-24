@@ -11,6 +11,8 @@ export default gql`
       page
       results {
         id
+        overview
+        title
         poster_path
       }
     }

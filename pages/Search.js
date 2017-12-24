@@ -21,7 +21,6 @@ import SearchResults from '../components/SearchResults'
 import colors from '../constants/colors'
 import font from '../constants/fontFamily'
 
-import debounce from 'lodash/debounce'
 
 class Search extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -35,6 +34,7 @@ class Search extends Component {
       color: colors.white,
       fontSize: 18,
       fontFamily: font.regular,
+      alignSelf: 'center'
     },
 
     tabBarIcon: ({ tintColor, focused }) => (
@@ -76,13 +76,9 @@ class Search extends Component {
   }
 }
 
-const withRedux = component =>
-  connect(({ movie }) => movie, { updateSearchInput, clearSearchInput })(
-    component
-  )
+const withRedux = connect(({ movie }) => movie, { updateSearchInput, clearSearchInput })
 
-const withApollo = component =>
-  graphql(search, {
+const withApollo = graphql(search, {
     options: ({ searchInput }) => {
       return {
         variables: {
@@ -92,7 +88,7 @@ const withApollo = component =>
       }
     },
     skip: ({ searchInput }) => searchInput.trim() === '',
-  })(component)
+  })
 
 export default compose(withRedux, withApollo)(Search)
 

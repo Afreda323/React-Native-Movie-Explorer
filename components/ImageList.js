@@ -63,10 +63,10 @@ class ImageList extends Component {
     // }
   }
   renderCast = () =>
-    this.props.castMembers.map(person => (
+    this.props.castMembers.map((person, i) => (
       <Image
         third
-        key={person.name}
+        key={person.name + i}
         imgPath={person.profile_path}
         name={person.name}
         character={person.character}
@@ -76,8 +76,7 @@ class ImageList extends Component {
   renderMovies = () =>
     this.props.movies.map((movie, i) => (
       <Image
-        offset={i % 2 === 0 && Platform.OS === 'ios'}
-        key={movie.id}
+        key={movie.id + i}
         onClick={id => this.props.onClick(id)}
         id={movie.id}
         imgPath={movie.poster_path}
@@ -98,7 +97,7 @@ class ImageList extends Component {
             {this.props.onLoadMore && (
               <TouchableOpacity
                 onPress={this.props.onLoadMore}
-                style={[styles.button, styles.offset]}>
+                style={[styles.button]}>
                 <Text style={styles.buttonText}>Load More</Text>
               </TouchableOpacity>
             )}
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button: {
-    width: width / 2,
+    width: width,
     height: width / 2 * 3 / 5,
     margin: 4,
     alignItems: 'center',

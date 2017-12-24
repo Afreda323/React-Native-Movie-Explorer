@@ -28,7 +28,7 @@ class Discover extends Component {
       color: colors.white,
       fontSize: 18,
       fontFamily: font.regular,
-      alignSelf: 'center'
+      alignSelf: 'center',
     },
 
     tabBarIcon: ({ tintColor, focused }) => (
@@ -63,12 +63,22 @@ class Discover extends Component {
           onSelectSort={updateSort}
           onMinRatingChange={updateMinRating}
         />
-        {discover && (
+        {!loading && discover && discover.results.length > 0 ? (
           <ImageList
             onLoadMore={this.props.loadMoreEntries}
             movies={discover.results}
             onClick={id => navigate('MovieDetail', { id })}
           />
+        ) : (
+          <Text
+            style={{
+              color: colors.white,
+              fontFamily: font.thin,
+              fontSize: 20,
+              padding: 20,
+            }}>
+            Nothing matches your criteria
+          </Text>
         )}
         {loading && (
           <Text
@@ -90,10 +100,9 @@ const mapStateToProps = ({ discover: { minRating, year, sort } }) => ({
   year,
   sort,
 })
-const withRedux = component => connect(mapStateToProps, actions)(component)
+const withRedux = connect(mapStateToProps, actions)
 
-const withApollo = component =>
-  graphql(discover, {
+const withApollo = graphql(discover, {
     options: ({ minRating, year, sort }) => {
       return { variables: { minRating, year, sort, page: 1 } }
     },
@@ -124,7 +133,7 @@ const withApollo = component =>
         },
       }
     },
-  })(component)
+  })
 
 export default compose(withRedux, withApollo)(Discover)
 

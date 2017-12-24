@@ -37,6 +37,7 @@ class MovieDetail extends Component {
       color: colors.white,
       fontSize: 18,
       fontFamily: font.regular,
+      alignSelf: 'center'
     },
     headerBackTitleStyle: {
       color: colors.white,
@@ -105,6 +106,7 @@ class MovieDetail extends Component {
               <MovieMedia
                 images={movie.images.backdrops}
                 cast={movie.credits.cast}
+                videos={movie.videos.results}
               />
             )}
             {movie.recommendations && (
@@ -126,11 +128,9 @@ const mstp = ({ watchlist: { watched, notWatched } }) => ({
   watched,
   notWatched,
 })
-const withRedux = component =>
-  connect(mstp, { addMovie, removeMovie })(component)
+const withRedux = connect(mstp, { addMovie, removeMovie })
 
-const withApollo = component =>
-  graphql(movieQuery, {
+const withApollo = graphql(movieQuery, {
     options: ({ navigation }) => {
       return {
         variables: {
@@ -138,7 +138,7 @@ const withApollo = component =>
         },
       }
     },
-  })(component)
+  })
 
 export default compose(withRedux, withApollo)(MovieDetail)
 

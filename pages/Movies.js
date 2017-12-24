@@ -34,6 +34,7 @@ class Movies extends Component {
       color: colors.white,
       fontSize: 18,
       fontFamily: font.regular,
+      alignSelf: 'center'
     },
 
     tabBarIcon: ({ tintColor, focused }) => (
@@ -94,10 +95,9 @@ class Movies extends Component {
   }
 }
 
-const withRedux = component => connect(({ movie }) => movie, actions)(component)
+const withRedux = connect(({ movie }) => movie, actions)
 
-const withApollo = component =>
-  graphql(other, {
+const withApollo = graphql(other, {
     options: ({ activeFilter }) => {
       return { variables: { filter: activeFilter, page: 1 } }
     },
@@ -128,7 +128,7 @@ const withApollo = component =>
         },
       }
     },
-  })(component)
+  })
 
 export default compose(withRedux, withApollo)(Movies)
 

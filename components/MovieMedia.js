@@ -23,6 +23,7 @@ const PATH = 'http://image.tmdb.org/t/p/original'
 class MovieMedia extends Component {
   static propTypes = {
     images: PropTypes.array.isRequired,
+    videos: PropTypes.array.isRequired,
     cast: PropTypes.array.isRequired,
   }
   static defaultProps = {
@@ -32,8 +33,15 @@ class MovieMedia extends Component {
   state = {
     imageEnd: 4,
     images: this.props.images.slice(0, 4),
+    videoEnd: 4,
+    videos: this.props.videos.slice(0, 4),
     castEnd: 3,
     cast: this.props.cast.slice(0, 3),
+  }
+  addVideos = () => {
+    this.setState({ videoEnd: this.state.videoEnd + 4 }, () =>
+      this.setState({ videos: this.props.videos.slice(0, this.state.videoEnd) })
+    )
   }
   addImages = () => {
     this.setState({ imageEnd: this.state.imageEnd + 4 }, () =>
@@ -48,6 +56,16 @@ class MovieMedia extends Component {
   render() {
     return (
       <View>
+        {this.state.videos.length >= this.props.videos.length ? null : (
+          <TouchableOpacity style={styles.button} onPress={this.addVideos}>
+            <Text style={styles.buttonText}>Load more videos</Text>
+            <Ionicons
+              name={'ios-videocam-outline'}
+              size={25}
+              color={colors.mediumRed}
+            />
+          </TouchableOpacity>
+        )}
         <Text style={styles.title}>Images</Text>
         <View
           style={{
@@ -86,7 +104,6 @@ class MovieMedia extends Component {
             />
           </TouchableOpacity>
         )}
-        <VideoList />
         <View style={{ backgroundColor: colors.white }}>
           <Text style={styles.titleAlt}>Cast Members</Text>
           <View
@@ -120,6 +137,11 @@ export default MovieMedia
 
 const styles = StyleSheet.create({
   imageCont: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  videoCont: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
@@ -165,3 +187,33 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 })
+
+
+// <Text style={styles.title}>Videos</Text>
+//         <View
+//           style={{
+//             backgroundColor: colors.mediumRed,
+//             height: 2,
+//             width: 50,
+//             marginTop: 5,
+//             marginBottom: 8,
+//             marginHorizontal: 20,
+//           }}
+//         />
+//         <View style={styles.videoCont}>
+//           {this.state.videos.map(video => (
+//             <View
+//               key={video.key}
+//               style={{
+//                 width: width / 2 - 4,
+//                 height: width / 2 / 1.777777777777778,
+//               }}>
+//               <Image
+//                 resizeMethod="resize"
+//                 resizeMode="contain"
+//                 style={{ width: '100%', height: '100%' }}
+//                 source={{ uri: `https://img.youtube.com/vi/${video.key}a/maxresdefault.jpg` }}
+//               />
+//             </View>
+//           ))}
+//         </View>

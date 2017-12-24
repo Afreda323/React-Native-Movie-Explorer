@@ -48,7 +48,9 @@ class SearchResult extends Component {
       duration: 1000,
     }).start()
   }
-  trimOverview = str => (str.length > 100 ? str.substr(0, 97) + '...' : str)
+
+  trimTitle = str => (str.length > 30 ? str.substr(0, 27) + '...' : str)
+  trimOverview = str => (str.length > 80 ? str.substr(0, 77) + '...' : str)
   render() {
     const {
       title,
@@ -75,7 +77,10 @@ class SearchResult extends Component {
             source={{ uri: `${PATH}${poster_path}` }}
           />
           <View style={styles.textWrap}>
-            <Text style={styles.title}>{title}</Text>
+            <Text
+              style={[styles.title, title.length > 12 && styles.titleSmall]}>
+              {this.trimTitle(title)}
+            </Text>
             <Text style={styles.overview}>{this.trimOverview(overview)}</Text>
             <View style={styles.ratingWrap}>
               <Text style={styles.rating}>{vote_average}</Text>
@@ -139,13 +144,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     backgroundColor: 'transparent',
   },
+  titleSmall: {
+    fontSize: 16,
+  },
   rating: {
     color: colors.white,
     fontFamily: font.bold,
     marginRight: 10,
     fontSize: 24,
     backgroundColor: 'transparent',
-    marginTop: -4
+    marginTop: -4,
   },
   textWrap: {
     width: width / 4 * 3,
