@@ -1,6 +1,6 @@
 # React Native Movie Explorer(WIP)
 
-Browse movies besed on various different criteria, search movies, and build a movie watchlist. The Backend is my [MovieDB GraphQL wrapper](https://github.com/Afreda323/MovieQL). It works well on the newest versions of both iOS and Android.
+Browse movies based on various different criteria, search movies, and build a movie watchlist. The Backend is my [MovieDB GraphQL wrapper](https://github.com/Afreda323/MovieQL). It works well on the newest versions of both iOS and Android.
 
 ## How to use
 - Clone the repo
