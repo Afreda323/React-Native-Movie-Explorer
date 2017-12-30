@@ -157,7 +157,8 @@ class FilterModal extends Component {
           </View>
         </Modal>
         <Text style={{ color: colors.white, paddingHorizontal: 10 }}>
-          {this.props.year}, {this.renderName(this.props.sortType, SORT_TYPES)}, {this.props.minRating}
+          {this.props.year}, {this.renderName(this.props.sortType, SORT_TYPES)},{' '}
+          {this.props.minRating}
         </Text>
         <TouchableOpacity style={styles.button} onPress={this.showFilters}>
           <Text style={styles.buttonText}>Change Filters</Text>
