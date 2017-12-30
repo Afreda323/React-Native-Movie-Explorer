@@ -5,6 +5,7 @@ Browse movies based on various different criteria, search movies, and build a mo
 ## How to use
 - Clone the repo
 - Install expo on your phone or download an iOS or Android sim
+
     npm install
     npm start
 
